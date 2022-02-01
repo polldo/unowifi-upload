@@ -1,7 +1,7 @@
 var Avrgirl = require('avrgirl-arduino');
 
 
-var board = {
+var unowifirev2 = {
   name: 'uno',
   baud: 57600,
   signature: new Buffer([0x1E, 0x96, 0x51]),
@@ -13,11 +13,28 @@ var board = {
   protocol: 'stk500v1'
 };
 
+var test = [
+  {
+    board: unowifirev2,
+    sketch: 'Unowifirev2-Blink.ino.hex'
+  },
+  {
+    board: 'uno',
+    sketch: 'Uno-Blink.ino.hex'
+  },
+  {
+    board: 'mega',
+    sketch: 'Mega-Blink.ino.hex'
+  }
+]
+
+var dut = test[0]
+
 var avrgirl = new Avrgirl({
-  board: board
+  board: dut.board
 });
 
-avrgirl.flash('Blink.ino.hex', function (error) {
+avrgirl.flash(dut.sketch, function (error) {
   if (error) {
     console.error(error);
   } else {
