@@ -96,10 +96,12 @@ stk500.prototype.setOptions = function (stream, options, timeout, done) {
       options.devicecode || 0,
       options.revision || 0,
       options.progtype || 0,
-      options.parmode || 0,
-      options.polling || 0,
-      options.selftimed || 0,
-      options.lockbytes || 0,
+
+      options.parmode || 1,
+      options.polling || 1,
+      options.selftimed || 1,
+      options.lockbytes || 1,
+
       options.fusebytes || 0,
       options.flashpollval1 || 0,
       options.flashpollval2 || 0,
@@ -107,11 +109,13 @@ stk500.prototype.setOptions = function (stream, options, timeout, done) {
       options.eeprompollval2 || 0,
       options.pagesizehigh || 0,
       options.pagesizelow || 0,
-      options.eepromsizehigh || 0,
+
+      options.eepromsizehigh || 1,
+
       options.eepromsizelow || 0,
       options.flashsize4 || 0,
       options.flashsize3 || 0,
-      options.flashsize2 || 0,
+      options.flashsize2 || 192,
       options.flashsize1 || 0
     ],
     responseData: Statics.OK_RESPONSE,
