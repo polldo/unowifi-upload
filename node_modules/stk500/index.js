@@ -86,6 +86,32 @@ stk500.prototype.getSignature = function (stream, timeout, done) {
   });
 };
 
+stk500.prototype.setExtendedOptions = function (stream, options, timeout, done) {
+  this.log("set extended device");
+  var self = this;
+
+  var opt = {
+    cmd: [
+      0x45,
+
+      0x05,
+      0x40,
+      0xD7,
+      0xA0,
+      0x00
+    ],
+    responseData: Statics.OK_RESPONSE,
+    timeout: timeout
+  };
+  sendCommand(stream, opt, function (err, data) {
+    self.log('setExtendedOptions', err, data);
+    if (err) {
+      return done(err);
+    }
+    done();
+  });
+};
+
 stk500.prototype.setOptions = function (stream, options, timeout, done) {
   this.log("set device");
   var self = this;
@@ -342,6 +368,9 @@ stk500.prototype.bootload = function (stream, hex, opt, done) {
     this.sync.bind(this, stream, 3, opt.timeout),
     this.verifySignature.bind(this, stream, opt.signature, opt.timeout),
     this.setOptions.bind(this, stream, parameters, opt.timeout),
+
+    this.setExtendedOptions.bind(this, stream, parameters, opt.timeout),
+
     this.enterProgrammingMode.bind(this, stream, opt.timeout),
     this.upload.bind(this, stream, hex, opt.pageSize, opt.timeout),
     this.verify.bind(this, stream, hex, opt.pageSize, opt.timeout),
